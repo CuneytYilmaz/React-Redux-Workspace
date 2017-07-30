@@ -1,10 +1,25 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../actions";
 
 export default class App extends Component {
-  render() {
+  componentWillMount() {
+    this.props.fetchUsers();
+  }
+
+  renderUser({ id, name, email }) {
     return (
-      <div>React simple starter</div>
+      <li className="list-group-item" key={id}>
+        <span className="label label-default label-pill pull-xs-right">
+          <a href={email}>
+            {email}
+          </a>
+        </span>
+      </li>
     );
+  }
+
+  render() {
+    return <div>React simple starter</div>;
   }
 }
