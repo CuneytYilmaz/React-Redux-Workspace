@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import { fetchUsers } from "../actions/index";
 
-export default class App extends Component {
+class App extends Component {
   componentWillMount() {
     this.props.fetchUsers();
   }
@@ -15,11 +15,29 @@ export default class App extends Component {
             {email}
           </a>
         </span>
+        {name}
       </li>
     );
   }
 
   render() {
-    return <div>React simple starter</div>;
+    return (
+      <div>
+        <h4>Email Directory</h4>
+        <ul className="list-group">
+          {this.props.users.length === 0
+            ? "Loading..."
+            : this.props.users.map(this.renderUser)}
+        </ul>
+      </div>
+    );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    users: state.users.all
+  };
+}
+
+export default connect(mapStateToProps, { fetchUsers })(App);
